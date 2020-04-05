@@ -1,0 +1,225 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="colorlib.com">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+    <link href="../static/css/main.css" rel="stylesheet" />
+
+   <!-- Add icon library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      max-width: 300px;
+      margin: auto;
+      text-align: center;
+      font-family: arial;
+    }
+
+    .title {
+      color: grey;
+      font-size: 18px;
+    }
+
+    button {
+      border: none;
+      outline: 0;
+      display: inline-block;
+      padding: 8px;
+      color: white;
+      background-color: #000;
+      text-align: center;
+      cursor: pointer;
+      width: 100%;
+      font-size: 18px;
+    }
+
+    a {
+      text-decoration: none;
+      font-size: 22px;
+      color: black;
+    }
+
+    button:hover, a:hover {
+      opacity: 0.7;
+    }
+    </style>
+
+
+  </head>
+  <body>
+    <div class="s01">
+      <form id="search" class="myform">
+        <fieldset>
+          <legend id="legend_title"><b>Verify Covid-19 Safe</b></legend>
+        </fieldset>
+        <div class="inner-form">
+          <div class="input-field first-wrap">
+            <input id="name" type="text" value="" placeholder="Full Name" required/>
+          </div>
+          <div class="input-field second-wrap">
+            <input id="code" type="text" value="" placeholder="Verification Code" required/>
+          </div>
+          <div class="input-field third-wrap">
+            <button class="btn-search" type="button" onclick="submitted()">Search</button>
+          </div>
+        </div>
+      </form>
+
+      <div id="card" class="card" style="background-color: white; display: none; padding: 15px">
+
+        <img id="card_img" src="https://us.123rf.com/450wm/nbnserge/nbnserge2003/nbnserge200300112/142812476-stop-coronavirus-2019-ncov-virus-icon-pathogen-respiratory-infection-deadly-coronavirus-asian-flu-ou.jpg?ver=6" alt="Infected" style="width:90%;">
+        <h1 id="card_name">John Doe</h1>
+        <p id="card_status" class="title"><b>Possibly Infected!</b></p>
+        <p id="card_tested">Date Tested: Unknown</p>
+        <p id="card_neg_tested">Date Negative: Unknown</p>
+        <p id="card_days_neg">Days Negative: Unknown </p><br>
+        <p id="card_contact_info"> Contact Information </p>
+        <div id="contact-1" style="margin: 24px 0; display: none">
+          <a href="#"><i class="fa fa-dribbble"></i></a> 
+          <a href="#"><i class="fa fa-twitter"></i></a>  
+          <a href="#"><i class="fa fa-linkedin"></i></a>  
+          <a href="#"><i class="fa fa-facebook"></i></a> 
+        </div>
+        <p id="contact-2" style="display: none"><button>Contact</button></p>
+
+
+      </div>
+    </div>
+  </body>
+
+<footer>
+  <script type="text/javascript">
+
+    var people = {
+      "james goin": {
+        name: "James Goin",
+        code: "1234",
+        state: "Verified Safe",
+        photo_url: "james_goin.jpg",
+        confirm_date: "3/10/2020",
+        negative_date: "3/28/2020",
+        days_negative: "18"
+      },
+      "preston greene": {
+        name: "Preston Greene",
+        code: "1234",
+        state: "Processing",
+        photo_url: "preston_greene.jpg",
+        confirm_date: "unknown",
+        negative_date: "unknown",
+        days_negative: "unknown"
+      },
+      "daniel feldman": {
+        name: "Daniel Feldman",
+        code: "1234",
+        state: "Quarantined",
+        photo_url: "daniel_feldman.jpg",
+        confirm_date: "4/5/2020",
+        negative_date: "4/19/2020",
+        days_negative: "1"
+      }
+    }
+
+    function submitted(event) {
+       let name = document.getElementById("name").value;
+       let code = document.getElementById("code").value;
+
+       if(name == "" || code == "") {
+        alert("Please enter a valid name and code. Example: Name: John Smith  Code: 12335624");
+        return;
+       }
+
+       var direct_name = name;
+
+       name = name.trim().toLowerCase();
+
+       if(name in people) {
+
+          if(code != people[name].code) {
+            document.getElementById("card_img").src = "../static/images/locked.png";
+            document.getElementById("card_name").innerText = people[name].name;
+            document.getElementById("card_status").innerText = "Provide valid code to unlock!";
+
+            document.getElementById("card_tested").innerText = "Date Tested: LOCKED";
+            document.getElementById("card_neg_tested").innerText = "Date Negative: LOCKED";
+            document.getElementById("card_days_neg").innerText = "Days Negative: LOCKED";
+
+            document.getElementById("card_contact_info").innerText = "Contact Information: LOCKED";
+
+            document.getElementById("contact-1").style.display = "none";
+            document.getElementById("contact-2").style.display = "none";
+
+            document.getElementById("legend_title").style.color = "black"
+            document.body.style.background = "white";
+
+            document.getElementById("card_status").style.color = "red";
+
+            document.getElementById("code").style =  "border: 2px solid red;";
+
+          } else {
+
+            document.getElementById("card_img").src = "../static/images/" + people[name].photo_url;
+            document.getElementById("card_name").innerText = people[name].name;
+            document.getElementById("card_status").innerText = people[name].state;
+
+            document.getElementById("card_tested").innerText = "Date Tested: " + people[name].confirm_date;
+            document.getElementById("card_neg_tested").innerText = "Date Negative: " + people[name].negative_date;
+            document.getElementById("card_days_neg").innerText = "Days Negative: " + people[name].days_negative;
+
+            document.getElementById("card_contact_info").innerText = "";
+
+            document.getElementById("contact-1").style.display = "block";
+            document.getElementById("contact-2").style.display = "block";
+          
+            if(people[name].state == "Verified Safe") {
+              document.body.style = "background-color: #4BB543; background-image: linear-gradient(315deg, #4BB543 0%, #0bab64 74%);";
+              document.getElementById("card_status").style.color = "";
+            } else {
+              document.getElementById("legend_title").style.color = "black"
+              document.body.style.background = "white";
+              document.getElementById("card_status").style.color = "red";
+
+            }
+              document.getElementById("code").style =  "";
+
+          }
+
+       } else {
+        // not found
+        document.getElementById("card_status").style.color = "";
+
+        document.getElementById("card_img").src = "https://www.wmpg.org/wp-content/uploads/2019/03/default-avatar.jpg";
+        document.getElementById("card_name").innerText = direct_name;
+        document.getElementById("card_status").innerText = "Possibly Infected!";
+
+        document.getElementById("card_tested").innerText = "Date Tested: Unknown";
+        document.getElementById("card_neg_tested").innerText = "Date Negative: Unknown";
+        document.getElementById("card_days_neg").innerText = "Days Negative: Unknown";
+
+        document.getElementById("card_contact_info").innerText = "";
+
+        document.getElementById("contact-1").style.display = "none";
+        document.getElementById("contact-2").style.display = "none";
+        document.getElementById("legend_title").style.color = "white"
+        document.body.style.backgroundImage = "url('../static/images/back.png')";
+
+        document.getElementById("code").style =  "";
+
+       }
+
+       
+
+       document.getElementById("card").style.display = "block";
+
+       return false;
+    }
+  </script>
+</footer>
+
+
+
+</html>
