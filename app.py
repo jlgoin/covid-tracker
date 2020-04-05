@@ -4,6 +4,7 @@ from flask import Flask, request, redirect, url_for, render_template, send_from_
 
 from werkzeug.utils import secure_filename
 import filecmp
+from flask_dropzone import Dropzone
 
 # Config
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -20,6 +21,18 @@ app.debug = True
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['DOWNLOAD_FOLDER'] = DOWNLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_SIZE_MB * 1024 * 1024
+
+app.config.update(
+    # Flask-Dropzone config:
+    DROPZONE_ALLOWED_FILE_CUSTOM=True,
+    DROPZONE_ALLOWED_FILE_TYPE='*',    
+    DROPZONE_MAX_FILE_SIZE=30,
+    DROPZONE_MAX_FILES=20,
+    DROPZONE_UPLOAD_ON_CLICK=True,
+    DROPZONE_ADD_REMOVE_LINKS=True
+)
+dropzone = Dropzone(app)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():

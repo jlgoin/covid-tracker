@@ -7,8 +7,30 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
     <link href="../static/css/main.css" rel="stylesheet" />
 
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" ></script>
+
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+
    <!-- Add icon library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Dropzone --> 
+  {{ dropzone.load_css() }}
+  {{ dropzone.style('
+    border: 2px dashed #3FB8AF; 
+    margin: 10px 0 10px;
+    min-height: 150px;
+    max-height: 400px;
+    min-width: 300px;
+  ') }}
+
 
     <style>
     .card {
@@ -48,13 +70,49 @@
     }
     </style>
 
+    <style type="text/css">
+            
+
+      #uploadfile {
+        display: none;
+      }
+
+      .profile-img-container {
+          position: absolute;
+          width:50%;
+      }
+
+      .profile-img-container img:hover {
+          opacity: 0.5;
+          z-index: 501;
+      }
+
+      .profile-img-container img:hover + i {
+          display: block;
+          z-index: 500;
+      }
+
+      .profile-img-container i {
+          display: none;
+          position: absolute;
+          margin-left:43%;
+          margin-top:40%;
+      }
+
+      .profile-img-container img {
+          position:absolute;
+      }
+
+    </style>
+
 
   </head>
   <body>
+
     <div class="s01">
       <form id="search" class="myform">
         <fieldset>
-          <legend id="legend_title"><b>Verify Covid-19 Safe</b></legend>
+          <legend id="legend_title">Verify Covid-19 Safe</legend>
         </fieldset>
         <div class="inner-form">
           <div class="input-field first-wrap">
@@ -67,7 +125,10 @@
             <button class="btn-search" type="button" onclick="submitted()">Search</button>
           </div>
         </div>
+        <div align="right"><a href="#" onclick="openForm()"> Register </a></div>
       </form>
+
+
 
       <div id="card" class="card" style="background-color: white; display: none; padding: 15px">
 
@@ -86,9 +147,157 @@
         </div>
         <p id="contact-2" style="display: none"><button>Contact</button></p>
 
-
       </div>
+
     </div>
+
+    <style> 
+        /*add full-width input fields*/ 
+        input[type=text], 
+        input[type=password] { 
+            width: 100%; 
+            padding: 12px 20px; 
+            margin: 8px 0; 
+            display: inline-block; 
+            border: 2px solid #ccc; 
+            box-sizing: border-box; 
+        } 
+        /* set a style for all buttons*/ 
+        button { 
+            background-color: green; 
+            color: white; 
+            padding: 14px 20px; 
+            margin: 8px 0; 
+            cursor: pointer; 
+            width: 100%; 
+        } 
+        /*set styles for the cancel button*/ 
+        .cancelbtn { 
+            padding: 14px 20px; 
+            background-color: #FF2E00; 
+        } 
+        /*float cancel and signup buttons and add an equal width*/ 
+        .cancelbtn, 
+        .signupbtn { 
+            float: left; 
+            width: 50% 
+        } 
+        /*add padding to container elements*/ 
+        .container { 
+            padding: 16px;
+        } 
+        /*define the modal’s background*/ 
+          
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0; 
+            top: 0; 
+            width: 70%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0, 0, 0); 
+            background-color: rgba(0, 0, 0, 0.4); 
+            padding-top: 60px; 
+        } 
+        /*define the modal-content background*/ 
+          
+        .modal-content { 
+            background-color: #fefefe; 
+            margin: 5% auto 15% auto; 
+            border: 1px solid #888; 
+            width: 80%; 
+        } 
+        /*define the close button*/ 
+          
+        .close { 
+            position: absolute; 
+            right: 35px; 
+            top: 15px; 
+            color: #000; 
+            font-size: 40px; 
+            font-weight: bold; 
+        } 
+        /*define the close hover and focus effects*/ 
+          
+        .close:hover, 
+        .close:focus { 
+            color: red; 
+            cursor: pointer; 
+        } 
+          
+        .clearfix::after { 
+            content: ""; 
+            clear: both; 
+            display: table; 
+        } 
+          
+        @media screen and (max-width: 300px) { 
+            .cancelbtn, 
+            .signupbtn { 
+                width: 100%; 
+            } 
+        } 
+
+    </style> 
+
+  
+    <div id="id01" class="modal"> 
+        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span> 
+        <form class="modal-content animate" action="/action_page.php">
+
+            <div class="container">
+
+                <div style="width:300px; height:300px; margin:auto">
+                  <div class="profile-img-container" style="width:300px; height:300px; margin:auto">
+                    <img src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" class="img-thumbnail img-circle img-responsive" />
+                    <i class="fa fa-upload fa-5x"></i>
+                  </div>
+                  <input id='uploadfile' type ='file'>
+                </div>
+
+                <label><b>Email</b></label> 
+                <input type="text" placeholder="Enter Email" name="email" required> 
+  
+                <label><b>Full Name</b></label> 
+                <input type="text" placeholder="Enter Full Name" name="psw" required> 
+  
+                <label><b>Access Code</b></label> 
+                <input type="text" placeholder="Enter Access Code to Share" name="psw-repeat" required> 
+
+                <label><b>Proof of Immunity</b></label> 
+                <input type="file" id="myFile" name="filename" title="Files">
+
+                <div class="clearfix"> 
+                    <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button> 
+                    <button type="submit" class="signupbtn">Get Verified</button> 
+                </div> 
+            </div> 
+        </form> 
+    </div> 
+  
+    <!--close the modal by just clicking outside of the modal-->
+    <script> 
+        var modal = document.getElementById('id01'); 
+  
+        window.onclick = function(event) { 
+            if (event.target == modal) { 
+                modal.style.display = "none"; 
+            } 
+        } 
+
+        function openForm() {
+          document.getElementById('id01').style.display='block';
+          document.getElementById('id01').style.width='auto';
+        }
+
+        $('.profile-img-container img').click(function(){
+          $('#uploadfile').click();
+        });
+    </script> 
+
+
   </body>
 
 <footer>
@@ -218,6 +427,16 @@
        return false;
     }
   </script>
+
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/croppic/1.0.3/croppic.min.js'></script>
+
+  <!-- Add Dropzone Box --> 
+  {{ dropzone.load_js() }}
+  {{ dropzone.config() }}
+  {{ dropzone.config(custom_options='autoProcessQueue: false, addRemoveLinks: true, parallelUploads: 20') }}
+
+  
 </footer>
 
 
